@@ -26,6 +26,7 @@ jobs:
         mkdir -p ~/.ssh
         ssh-keygen -f ~/.ssh/id_rsa -P '' -q
         ls -l /etc/ssh/sshd_config.d/ 
+        cat /etc/ssh/sshd_config.d/50-cloudimg-settings.conf
         sudo echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
         sudo echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
         sudo echo "AuthorizedKeysFile .ssh/authorized_keys" >> /etc/ssh/sshd_config
