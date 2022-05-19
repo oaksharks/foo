@@ -22,9 +22,9 @@ jobs:
     - uses: actions/checkout@v2
     - name: install ssh
       run: | 
-        sudo apt-get install openssh-server
-        sudo /etc/init.d/ssh restart
-        ps -ef |grep ssh
+        mkdir -p ~/.ssh
+        ssh-keygen -f ~/.ssh/id_rsa -P '' -q
         ls -l ~
         ls -l ~/.ssh
+        ssh -i ~/.ssh/id_rsa localhost
 
