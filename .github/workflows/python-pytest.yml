@@ -30,8 +30,6 @@ jobs:
         sudo apt-get install openssh-server
         sudo /etc/init.d/ssh restart
         ps -ef |grep ssh
-        ss -tnlp |grep ssh
-        ss -tnlp |grep 22
         ls -l ~
         ls -l ~/.ssh
 
