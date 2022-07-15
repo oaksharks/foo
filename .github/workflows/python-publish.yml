@@ -48,7 +48,7 @@ jobs:
         args: auditwheel --help
 
     - name: run docker container
-      uses: quay.io/pypa/manylinux2014_x86_64
+      uses: docker://quay.io/pypa/manylinux2014_x86_64
       with:
         args: auditwheel --help
 
