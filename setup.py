@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from setuptools import find_packages
 from setuptools import setup
 
-
+MIN_PYTHON_VERSION = '>=3.6.*'
 setup(
     name='myfootest',
     version="0.1",
@@ -16,7 +16,7 @@ setup(
     author_email='yangjian@zetyun.com',
     license='Apache License 2.0',
     install_requires=['numpy'],
-    python_requires="3.6",
+    python_requires=MIN_PYTHON_VERSION,
     classifiers=[
         'Operating System :: OS Independent',
         'Intended Audience :: Developers',
