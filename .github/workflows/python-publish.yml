@@ -54,7 +54,7 @@ jobs:
     - name: manylinux2014_x86_64_centos7
       uses: docker://quay.io/pypa/manylinux2014_x86_64
       with:
-        args: auditwheel dist/causal_plot-0.0.1-cp310-cp310-linux_x86_64.whl
+        args: auditwheel repair dist/causal_plot-0.0.1-cp310-cp310-linux_x86_64.whl
 
     - name: manylinux2014_x86_64_centos7
       uses: docker://quay.io/pypa/manylinux2014_x86_64
