@@ -31,6 +31,10 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: '3.x'
+
+    - name: ls -lah
+      run: ls -lah
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -39,37 +43,19 @@ jobs:
     - name: Build package
       run: python -m build
 
-    - name: convert for centos7
+    - name: ls -lah
+      run: ls -lah
+
+    - name: manylinux2014_x86_64_centos7
       uses: docker://quay.io/pypa/manylinux2014_x86_64
       with:
-        args: auditwheel repair dist/*.whl
+        args: ls -lah
 
+    - name: manylinux2014_x86_64_centos7
+      uses: docker://quay.io/pypa/manylinux2014_x86_64
+      with:
+        args: auditwheel repair *.whl
 
-#  build_manylinux2010_wheel:
-#
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Show files
-#        run: |
-#          ls -l
-#          pwd
-
-
-#    - name: convert for centos7
-#      uses: docker://quay.io/pypa/manylinux2014_x86_64
-#      with:
-#        args: auditwheel --help
-
-#    - name: convert for centos8 and later
-#      uses: docker://quay.io/pypa/manylinux2014_x86_64
-#      with:
-#        args: auditwheel --help
-#
-#    - name: run docker container
-#      uses: docker://quay.io/pypa/manylinux2014_x86_64
-#      with:
-#        args: -v `pwd`:/io auditwheel repair *.whl
 
 #    - name: Publish package
 #      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
