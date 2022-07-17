@@ -95,7 +95,7 @@ extras_require = read_extra_requirements()
 print('requirements:', requires)
 
 setup(
-    name='causal-plot',
+    name='myylearn',
     version=version,
     description='A python package for causal inference',
     long_description=long_description,
