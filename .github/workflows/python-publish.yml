@@ -49,7 +49,6 @@ jobs:
         run: |
           ls -l
           pwd
-          ls -l dist
 
 
 #    - name: convert for centos7
