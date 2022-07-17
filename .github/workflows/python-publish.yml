@@ -42,7 +42,7 @@ jobs:
     - name: convert for centos7
       uses: docker://quay.io/pypa/manylinux2014_x86_64
       with:
-        args: ls || pwd || ls -l /io
+        args: ls -lah
 
 
 #  build_manylinux2010_wheel:
