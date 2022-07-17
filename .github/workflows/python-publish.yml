@@ -76,11 +76,18 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
 
-      - name: Publish package
-        uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+      - name: Display structure of downloaded files
+        run: ls -ah
+
+      - name: Display structure of downloaded files
+        run: ls -lah dist
+
+      - name: Publish a Python distribution to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN_OAKS }}
+          packages_dir: dist/
 
       - name: Get release
         id: get_release
