@@ -23,7 +23,7 @@ jobs:
 
   build_linux_wheel:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
 
     steps:
     - uses: actions/checkout@v3
@@ -46,20 +46,20 @@ jobs:
     - name: ls -lah
       run: ls -lah
 
-    - name: manylinux2014_x86_64_centos7
-      uses: docker://quay.io/pypa/manylinux2014_x86_64
-      with:
-        args: ls -lah
-
-    - name: manylinux2014_x86_64_centos7
-      uses: docker://quay.io/pypa/manylinux2014_x86_64
-      with:
-        args: auditwheel repair dist/causal_plot-0.0.1-cp310-cp310-linux_x86_64.whl
-
-    - name: manylinux2014_x86_64_centos7
-      uses: docker://quay.io/pypa/manylinux2014_x86_64
-      with:
-        args: ls -ah
+#    - name: manylinux2014_x86_64_centos7
+#      uses: docker://quay.io/pypa/manylinux2014_x86_64
+#      with:
+#        args: ls -lah
+#
+#    - name: manylinux2014_x86_64_centos7
+#      uses: docker://quay.io/pypa/manylinux2014_x86_64
+#      with:
+#        args: auditwheel repair dist/causal_plot-0.0.1-cp310-cp310-linux_x86_64.whl
+#
+#    - name: manylinux2014_x86_64_centos7
+#      uses: docker://quay.io/pypa/manylinux2014_x86_64
+#      with:
+#        args: ls -ah
 
 #    - name: Publish package
 #      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
