@@ -70,7 +70,7 @@ jobs:
       - name: Download archives
         uses: actions/download-artifact@v3
         with:
-          name: windows-whl-artifact-download
+          name: windows-whl-artifact-upload
           path: dist/*.whl
 
       - name: Display structure of downloaded files
