@@ -32,8 +32,8 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: ls -lah
-      run: ls -lah
+    - name: dir
+      run: dir
 
     - name: Install dependencies
       run: |
@@ -43,8 +43,8 @@ jobs:
     - name: Build package
       run: python -m build
 
-    - name: ls -lah
-      run: ls -lah
+    - name: dir
+      run: dir
 
 #    - name: manylinux2014_x86_64_centos7
 #      uses: docker://quay.io/pypa/manylinux2014_x86_64
