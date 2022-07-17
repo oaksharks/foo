@@ -62,7 +62,7 @@ jobs:
 
   publish_package:
     runs-on: ubuntu-latest
-    needs: [build_linux_wheel]
+    needs: [build_linux_wheel]  # TODO 增加Linux
     steps:
       - name: Display structure of downloaded files
         run: ls -R
@@ -71,7 +71,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: windows-whl-artifact-upload
-          path: dist/*.whl
+          path: .
 
       - name: Display structure of downloaded files
         run: ls -R
@@ -87,7 +87,6 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN_OAKS }}
-          packages_dir: dist/
 
       - name: Get release
         id: get_release
