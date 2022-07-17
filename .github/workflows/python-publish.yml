@@ -12,7 +12,10 @@ name: Upload Python Package
 #  release:
 #    types: [published]
 
-on: push
+on:
+  push:
+    tags:
+      - "v*.*.*"
 
 #on:
 #  release:
