@@ -76,8 +76,25 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
 
-      - name: Publish package
-        uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+#      - name: Publish package
+#        uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+#        with:
+#          user: __token__
+#          password: ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEV_GITHUB_TOKEN }}
+
+      - name: Upload Release Asset
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEV_GITHUB_TOKEN }}
         with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: dist/*.whl
+          asset_name: windows.zip
+          asset_content_type: application/zip
