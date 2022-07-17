@@ -46,6 +46,12 @@ jobs:
     - name: dir
       run: dir
 
+  - uses: actions/upload-artifact@v3
+    with:
+      name: windows-whl-artifact-upload
+      path: dist/*.whl
+
+
 #    - name: manylinux2014_x86_64_centos7
 #      uses: docker://quay.io/pypa/manylinux2014_x86_64
 #      with:
@@ -61,7 +67,14 @@ jobs:
 #      with:
 #        args: ls -ah
 
-    - name: Publish package
+  Publish_package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: windows-whl-artifact-download
+          path: dist/*.whl
+      - name: Publish package
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       with:
         user: __token__
