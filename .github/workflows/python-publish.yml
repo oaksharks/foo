@@ -20,6 +20,7 @@ permissions:
   contents: read
 
 jobs:
+
   build_linux_wheel:
 
     runs-on: windows-2022
@@ -66,16 +67,16 @@ jobs:
 #      with:
 #        args: ls -ah
 
-  publish_package:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Download archives
-      uses: actions/download-artifact@v3
-      with:
-        name: windows-whl-artifact-download
-        path: dist/*.whl
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
+#  publish_package:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - name: Download archives
+#      uses: actions/download-artifact@v3
+#      with:
+#        name: windows-whl-artifact-download
+#        path: dist/*.whl
+#    - name: Publish package
+#      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+#      with:
+#        user: __token__
+#        password: ${{ secrets.PYPI_API_TOKEN }}
