@@ -96,7 +96,7 @@ jobs:
         run: |
           yum install -y atlas-devel
           /opt/python/cp38-cp38/bin/python -m pip install --upgrade pip
-          /opt/python/cp38-cp38/bin/python pip install build
+          /opt/python/cp38-cp38/bin/python -m pip install build
 
       - name: Build package
         run: /opt/python/cp38-cp38/bin/python -m build
