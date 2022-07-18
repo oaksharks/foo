@@ -104,8 +104,8 @@ jobs:
 
       - name: manylinux2014_x86_64_centos7
         uses: docker://quay.io/pypa/manylinux2014_x86_64
-        run: |
-           auditwheel repair -w dist `ls dist/*.whl`
+        with:
+          args: auditwheel repair -w dist `ls dist/*.whl`
 
 #      - name: ls -R
 #        run: ls -R
