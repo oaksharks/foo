@@ -86,8 +86,6 @@ jobs:
 
   build_linux_wheel:
     runs-on: ubuntu-latest
-    container:
-      image: centos:7
 
     steps:
       - uses: actions/checkout@v3
@@ -101,21 +99,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install build
 
-#      - name: Install dependencies
-#        run: |
-#          yum repolist
-#          yum install -y python-pip
-#
-#          python -m pip install --upgrade pip
-#          pip install build
-
       - name: Build package
         run: python -m build
 
-#      - name: manylinux2014_x86_64_centos7
-#        run: |
-#           auditwheel repair -w dist `ls dist/*.whl`
-#
+      - name: manylinux2014_x86_64_centos7
+        uses: docker://quay.io/pypa/manylinux2014_x86_64
+        run: |
+           auditwheel repair -w dist `ls dist/*.whl`
+
 #      - name: ls -R
 #        run: ls -R
 #        with:
