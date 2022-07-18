@@ -87,14 +87,15 @@ jobs:
   build_linux_wheel:
     runs-on: ubuntu-latest
     container:
-      image: quay.io/pypa/manylinux2014_x86_64
+      image: centos:7
 
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.x'
+          python-version: '3.8'
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -111,17 +112,15 @@ jobs:
       - name: Build package
         run: python -m build
 
-      - name: manylinux2014_x86_64_centos7
-        run: |
-           auditwheel repair -w dist `ls dist/*.whl`
-
-      - name: ls -R
-        run: ls -R
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: linux-whl-artifact-upload
-          path: dist/*.whl
+#      - name: manylinux2014_x86_64_centos7
+#        run: |
+#           auditwheel repair -w dist `ls dist/*.whl`
+#
+#      - name: ls -R
+#        run: ls -R
+#        with:
+#          name: linux-whl-artifact-upload
+#          path: dist/*.whl
 
 
 #    - name: manylinux2014_x86_64_centos7
