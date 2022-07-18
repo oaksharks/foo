@@ -12,18 +12,18 @@ name: Upload Python Package
 #  release:
 #    types: [published]
 
-on:
-  push:
-    tags:
-      - "*.*.*"
+#on:
+#  push:
+#    tags:
+#      - "*.*.*"
 
 #on:
 #  release:
 #    types: [created]
 
-#on:
-#  push:
-#    branches: [ main ]
+on:
+  push:
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -130,47 +130,47 @@ jobs:
 #      with:
 #        args: ls -ah
 
-  publish_package:
-    runs-on: ubuntu-latest
-    needs: [build_tar, build_windows_wheel]
-    # needs: [build_linux_wheel, build_windows_wheel]  # TODO 增加Linux
-
-    steps:
-      - name: Display structure of downloaded files
-        run: ls -R
-
-      - name: Download archives
-        uses: actions/download-artifact@v3
-        with:
-          name: windows-whl-artifact-upload
-          path: dist
-
-      - name: Download archives
-        uses: actions/download-artifact@v3
-        with:
-          name: sourcecode-artifact-upload
-          path: dist
-
-      - name: Display structure of downloaded files
-        run: ls -R
-
-      - name: Display structure of downloaded files
-        run: ls -ah
-
-      - name: Display structure of downloaded files
-        run: ls -lah dist
-
-      - name: Publish a Python distribution to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN_OAKS }}
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          token: ${{ secrets.DEV_GITHUB_TOKEN }}
-          files: dist/*
+#  publish_package:
+#    runs-on: ubuntu-latest
+#    needs: [build_tar, build_windows_wheel]
+#    # needs: [build_linux_wheel, build_windows_wheel]  # TODO 增加Linux
+#
+#    steps:
+#      - name: Display structure of downloaded files
+#        run: ls -R
+#
+#      - name: Download archives
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: windows-whl-artifact-upload
+#          path: dist
+#
+#      - name: Download archives
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: sourcecode-artifact-upload
+#          path: dist
+#
+#      - name: Display structure of downloaded files
+#        run: ls -R
+#
+#      - name: Display structure of downloaded files
+#        run: ls -ah
+#
+#      - name: Display structure of downloaded files
+#        run: ls -lah dist
+#
+#      - name: Publish a Python distribution to PyPI
+#        uses: pypa/gh-action-pypi-publish@release/v1
+#        with:
+#          user: __token__
+#          password: ${{ secrets.PYPI_API_TOKEN_OAKS }}
+#
+#      - name: Release
+#        uses: softprops/action-gh-release@v1
+#        with:
+#          token: ${{ secrets.DEV_GITHUB_TOKEN }}
+#          files: dist/*
 
 #      - name: Get release
 #        id: get_release
