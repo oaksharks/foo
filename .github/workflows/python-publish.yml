@@ -87,29 +87,24 @@ jobs:
   build_linux_wheel:
     runs-on: ubuntu-latest
     container:
-      image: ubuntu:16.04
+      image: quay.io/pypa/manylinux2014_x86_64
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
 
       - name: Install dependencies
         run: |
-          apt-get update 
-          apt-get install -y gcc 
-          python -m pip install --upgrade pip
-          pip install build
+          yum install -y atlas-devel
+          /opt/python/cp38-cp38/bin/python -m pip install --upgrade pip
+          /opt/python/cp38-cp38/bin/python pip install build
 
       - name: Build package
-        run: python -m build
+        run: /opt/python/cp38-cp38/bin/python -m build
 
       - name: manylinux2014_x86_64_centos7
-        uses: docker://quay.io/pypa/manylinux2014_x86_64
-        with:
-          args: auditwheel repair -w dist dist/myylearn-0.0.6-cp38-cp38-linux_x86_64.whl
+        run: |
+           auditwheel repair -w dist dist/myylearn-0.0.6-cp38-cp38-linux_x86_64.whl
+
 
 #      - name: ls -R
 #        run: ls -R
