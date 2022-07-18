@@ -85,7 +85,9 @@ jobs:
 
 
   build_linux_wheel:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:16.04
 
     steps:
       - uses: actions/checkout@v3
