@@ -12,58 +12,83 @@ name: Upload Python Package
 #  release:
 #    types: [published]
 
-on:
-  push:
-    tags:
-      - "*.*.*"
+#on:
+#  push:
+#    tags:
+#      - "*.*.*"
 
 #on:
 #  release:
 #    types: [created]
 
-#on:
-#  push:
-#    branches: [ main ]
+on:
+  push:
+    branches: [ main ]
 
 permissions:
   contents: read
 
 jobs:
 
-  build_wheels:
-    runs-on:  ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [windows-latest, macos-latest]
-        python-version: [ 3.7, 3.8, 3.6 ]
-        exclude:
-          - os: windows-latest
-            python-version: 3.6
+#  build_wheels:
+#    runs-on:  ${{ matrix.os }}
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        # os: [windows-latest, macos-latest, ubuntu-latest]
+#        os: [ ubuntu-latest ]
+#        # python-version: [ 3.7, 3.8, 3.6 ]
+#        python-version: [ 3.8 ]
+##        exclude:
+##          - os: windows-latest
+##            python-version: 3.6
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Set up Python
+#        uses: actions/setup-python@v3
+#        with:
+#          python-version: ${{ matrix.python-version }}
+#
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install build
+#
+#      - name: Build package
+#        run: python -m build
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: windows-whl-artifact-upload
+#          path: dist/*.whl
 
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
+#  build_tar:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Set up Python
+#        uses: actions/setup-python@v3
+#        with:
+#          python-version: '3.x'
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install build
+#
+#      - name: Build package
+#        run: python -m build
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: sourcecode-artifact-upload
+#          path: dist/*.tar.gz
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install build
 
-      - name: Build package
-        run: python -m build
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: windows-whl-artifact-upload
-          path: dist/*.whl
-
-
-  build_tar:
+  build_linux_wheel:
     runs-on: ubuntu-latest
+    container:
+      image: quay.io/pypa/manylinux2014_x86_64
+
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
@@ -75,22 +100,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install build
 
-      - name: Build package
-        run: python -m build
-      - uses: actions/upload-artifact@v3
-        with:
-          name: sourcecode-artifact-upload
-          path: dist/*.tar.gz
-
-
-#  build_linux_wheel:
-#    runs-on: ubuntu-latest
-#    container:
-#      image: quay.io/pypa/manylinux2014_x86_64
-#
-#    steps:
-#      - uses: actions/checkout@v3
-#
 #      - name: Install dependencies
 #        run: |
 #          yum repolist
@@ -98,21 +107,21 @@ jobs:
 #
 #          python -m pip install --upgrade pip
 #          pip install build
-#
-#      - name: Build package
-#        run: python -m build
-#
-#      - name: manylinux2014_x86_64_centos7
-#        run: |
-#           auditwheel repair -w dist `ls dist/*.whl`
-#
-#      - name: ls -R
-#        run: ls -R
-#
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: linux-whl-artifact-upload
-#          path: dist/*.whl
+
+      - name: Build package
+        run: python -m build
+
+      - name: manylinux2014_x86_64_centos7
+        run: |
+           auditwheel repair -w dist `ls dist/*.whl`
+
+      - name: ls -R
+        run: ls -R
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: linux-whl-artifact-upload
+          path: dist/*.whl
 
 
 #    - name: manylinux2014_x86_64_centos7
@@ -130,41 +139,41 @@ jobs:
 #      with:
 #        args: ls -ah
 
-  release_and_publish_package:
-    runs-on: ubuntu-latest
-    needs: [build_tar, build_wheels]
-    # needs: [build_linux_wheel, build_windows_wheel]
-
-    steps:
-      - name: Display structure of downloaded files
-        run: ls -R
-
-      - name: Download archives
-        uses: actions/download-artifact@v3
-        with:
-          name: windows-whl-artifact-upload
-          path: dist
-
-      - name: Download archives
-        uses: actions/download-artifact@v3
-        with:
-          name: sourcecode-artifact-upload
-          path: dist
-
-      - name: Display structure of downloaded files
-        run: ls -R
-
-      - name: Publish a Python distribution to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN_OAKS }}
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          token: ${{ secrets.DEV_GITHUB_TOKEN }}
-          files: dist/*
+#  release_and_publish_package:
+#    runs-on: ubuntu-latest
+#    needs: [build_tar, build_wheels]
+#    # needs: [build_linux_wheel, build_windows_wheel]
+#
+#    steps:
+#      - name: Display structure of downloaded files
+#        run: ls -R
+#
+#      - name: Download archives
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: windows-whl-artifact-upload
+#          path: dist
+#
+#      - name: Download archives
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: sourcecode-artifact-upload
+#          path: dist
+#
+#      - name: Display structure of downloaded files
+#        run: ls -R
+#
+#      - name: Publish a Python distribution to PyPI
+#        uses: pypa/gh-action-pypi-publish@release/v1
+#        with:
+#          user: __token__
+#          password: ${{ secrets.PYPI_API_TOKEN_OAKS }}
+#
+#      - name: Release
+#        uses: softprops/action-gh-release@v1
+#        with:
+#          token: ${{ secrets.DEV_GITHUB_TOKEN }}
+#          files: dist/*
 
 
 #      - name: Get release
