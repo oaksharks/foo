@@ -126,6 +126,13 @@ jobs:
 
       - run: ls -R
 
+      - name: Rearrange wheels
+        run: |
+          mv dist/wheelhouse/* dist
+          rm -rf dist/wheelhouse/
+
+      - run: ls -R
+
       - name: Publish a Python distribution to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
