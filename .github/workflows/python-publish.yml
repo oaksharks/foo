@@ -85,14 +85,16 @@ jobs:
 
 
   build_linux_wheel:
+
     runs-on: ubuntu-latest
     container:
       image: quay.io/pypa/manylinux2014_x86_64
+
     strategy:
       fail-fast: false
       matrix:
-        # os: [windows-latest, macos-latest, ubuntu-latest]
-        python-name: [ cp310-cp310,  cp311-cp311,  cp36-cp36m,  cp37-cp37m,  cp38-cp38,  cp39-cp39 ]
+        # python-name: [ cp310-cp310,  cp311-cp311,  cp36-cp36m,  cp37-cp37m,  cp38-cp38,  cp39-cp39 ]
+        python-name: [ cp38-cp38 ]
 
     steps:
       - uses: actions/checkout@v3
@@ -108,30 +110,16 @@ jobs:
 
       - name: Repair wheel
         run: |
-          ls dist/*.whl | cat | xargs -t -n 1 auditwheel repair -w dist 
+          ls dist/*.whl | cat | xargs -t -n 1 auditwheel repair -w dist/wheelhouse
           ls -R dist
 
-#      - name: ls -R
-#        run: ls -R
-#        with:
-#          name: linux-whl-artifact-upload
-#          path: dist/*.whl
+      - uses: actions/upload-artifact@v3
+        with:
+          name: sourcecode_artifact
+          path: | 
+          dist/*.tar.gz
+          dist/wheelhouse/*.whl
 
-
-#    - name: manylinux2014_x86_64_centos7
-#      uses: docker://quay.io/pypa/manylinux2014_x86_64
-#      with:
-#        args: ls -lah
-#
-#    - name: manylinux2014_x86_64_centos7
-#      uses: docker://quay.io/pypa/manylinux2014_x86_64
-#      with:
-#        args: auditwheel repair dist/causal_plot-0.0.1-cp310-cp310-linux_x86_64.whl
-#
-#    - name: manylinux2014_x86_64_centos7
-#      uses: docker://quay.io/pypa/manylinux2014_x86_64
-#      with:
-#        args: ls -ah
 
 #  release_and_publish_package:
 #    runs-on: ubuntu-latest
