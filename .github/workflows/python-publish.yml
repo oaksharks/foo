@@ -97,8 +97,8 @@ jobs:
         with:
           name: linux_wheels
           path: | 
-          dist/*.tar.gz
-          dist/wheelhouse/*.whl
+            dist/*.tar.gz
+            dist/wheelhouse/*.whl
 
 
 #  release_and_publish_package:
